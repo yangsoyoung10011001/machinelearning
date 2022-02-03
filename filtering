@@ -1,0 +1,117 @@
+import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+from scipy.signal import butter, lfilter
+from scipy.signal import butter
+
+def butter_bandpass(lowcut, highcut, fs, order =):#order구해야함
+    nyq=0.5*fs
+    low = lowcut/nyq
+    high = highcut/nyq
+    b,a=butter(order, [low,high], btype='and')
+    return b, ay=lfilter(b,a,data)
+
+
+
+def butter_bandpass_filter(data,locut,highcut,fs,order=5):
+    b,a=butter_bandpass(lowcut,highcut,fs,order=order)
+    return y
+
+#BPF setting
+lowcut_ecg = 0.5
+highcut_ecg = 40
+lowcut_ppg = 0.5
+highcut_ppg = 10
+###################################################################################33333
+#BPF
+# 밴드패스필터...
+yy =butter_bandpass_filter(z,lowcut,highcut,Fs,order=)
+
+#1. rawdata 신호 plot
+plt.plot(t,z,'y',label='origin')
+plt.legend()
+plt.show()
+
+#2. 필터 적용된 plot
+plt.plot(t,yy,'b',label='filtered data')
+plt.legend()
+plt.show()
+
+#3. 필터 적용된 FFT plot
+yf = np.fft.fft(yy)/N
+yf = yf[range(int(N/2))]
+
+plt.title("BPF")
+plt.plot(freq, abs(yf), 'k')
+plt.xlim(0, Fs/20)
+plt.show()
+################################################################################################################
+# 로우패스필터
+def butter_lowpass(cutoff, fs, order=9):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    return b, a
+
+def butter_lowpass_filter(data, cutoff, fs, order=9):
+    b, a = butter_lowpass(cutoff, fs, order=order)
+    y = lfilter(b, a, data)
+    return y
+
+# LPF
+cutoff = 30.
+
+lpf = butter_lowpass_filter(z, cutoff, Fs, order=9)
+
+# 1. 원 신호
+plt.plot(t, z, 'y', label='origin')
+# 2. 필터 적용된 Plot
+plt.plot(t, lpf, 'b', label='filtered data')
+plt.legend()
+plt.show() 
+
+# 3. 필터 적용된 FFT Plot
+yfft = np.fft.fft(lpf)
+yf = yfft / N
+yf = yf[range(int(N/2))]
+
+plt.plot(freq, abs(yf), 'm')
+plt.title("LBP")
+plt.xlim(0, Fs / 20)
+plt.show()
+
+####################################################################################
+#하이패스 
+def butter_highpass(cutoff, fs, order=3):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = signal.butter(order, normal_cutoff, btype='high', analog=False)
+    return b, a
+
+def butter_highpass_filter(data, cutoff, fs, order=3):
+    b, a = butter_highpass(cutoff, fs, order=order)
+    y = signal.filtfilt(b, a, data)
+    return y
+
+
+# HPF
+cutoff = 50.
+hpf = butter_highpass_filter(z, cutoff, Fs)
+
+# 1. 원 신호
+plt.plot(t, z, 'y', label='origin')
+
+# 2. 필터 적용된 Plot
+plt.plot(t, hpf, 'b', label='filtered data')
+plt.legend()
+plt.show() 
+
+# 3. 필터 적용된 FFT Plot
+yfft = np.fft.fft(hpf)
+yf = yfft / N
+yf = yf[range(int(N/2))]
+
+plt.plot(freq, abs(yf), 'b')
+plt.title("HBF")
+plt.xlim(0, Fs / 20)
+plt.show()
